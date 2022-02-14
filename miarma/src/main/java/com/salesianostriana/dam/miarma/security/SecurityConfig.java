@@ -50,8 +50,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/producto/**").hasRole("ADMIN")
-                    .antMatchers(HttpMethod.POST, "/auth/**").anonymous()
+
+                //REGISTRO/LOGIN
+
+                    .antMatchers(HttpMethod.POST, "/auth/register").anonymous()
+                    .antMatchers(HttpMethod.POST, "/auth/**").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "").hasRole("USER")
+
+                //PUBLICACIONES
+
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+
+                //USUARIOS
+
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "").hasRole("USER")
                     .antMatchers("/h2-console/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                     .anyRequest().authenticated();
 

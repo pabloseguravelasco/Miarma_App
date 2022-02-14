@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.miarma.security.dto;
 
+import com.salesianostriana.dam.miarma.users.model.UserRole;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,5 +18,6 @@ public class JwtUserResponse {
     private String password2;
     private String avatar;
     private String token;
+    private UserRole role;
 
 }

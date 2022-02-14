@@ -1,9 +1,10 @@
 package com.salesianostriana.dam.miarma.security;
 
-import com.salesianostriana.dam.security.dto.JwtUserResponse;
-import com.salesianostriana.dam.security.dto.LoginDto;
-import com.salesianostriana.dam.security.jwt.JwtProvider;
-import com.salesianostriana.dam.users.model.UserEntity;
+
+import com.salesianostriana.dam.miarma.security.dto.JwtUserResponse;
+import com.salesianostriana.dam.miarma.security.dto.LoginDto;
+import com.salesianostriana.dam.miarma.security.jwt.JwtProvider;
+import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,14 +32,12 @@ public class AuthenticationController {
                 authenticationManager.authenticate(
                    new UsernamePasswordAuthenticationToken(
                            loginDto.getEmail(),
-                           loginDto.getPassword()
+                           loginDto.getPassword1()
                    )
                 );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Devolver una respuesta adecuada
-        // que incluya el token del usuario.
         String jwt = jwtProvider.generateToken(authentication);
 
 
@@ -57,10 +56,10 @@ public class AuthenticationController {
 
     private JwtUserResponse convertUserToJwtUserResponse(UserEntity user, String jwt) {
         return JwtUserResponse.builder()
-                .fullName(user.getFullName())
+                .nickname(user.getNickname())
                 .email(user.getEmail())
                 .avatar(user.getAvatar())
-                .role(user.getRole().name())
+                .role(user.getRole())
                 .token(jwt)
                 .build();
     }

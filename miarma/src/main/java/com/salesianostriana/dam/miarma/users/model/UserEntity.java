@@ -42,10 +42,6 @@ import lombok.NoArgsConstructor;
 public class UserEntity implements UserDetails {
 
 
-    /*@Id
-    @GeneratedValue
-    private Long id;
-     */
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -91,39 +87,22 @@ public class UserEntity implements UserDetails {
     }
 
 
-    /**
-     * No vamos a gestionar la expiración de cuentas. De hacerse, se tendría que dar
-     * cuerpo a este método
-     */
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    /**
-     * No vamos a gestionar el bloqueo de cuentas. De hacerse, se tendría que dar
-     * cuerpo a este método
-     */
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    /**
-     * No vamos a gestionar la expiración de cuentas. De hacerse, se tendría que dar
-     * cuerpo a este método
-     */
 
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-
-    /**
-     * No vamos a gestionar el bloqueo de cuentas. De hacerse, se tendría que dar
-     * cuerpo a este método
-     */
     @Override
     public boolean isEnabled() {
         return true;

@@ -2,6 +2,7 @@ package com.salesianostriana.dam.miarma.security.jwt;
 
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -30,10 +31,9 @@ public class JwtProvider {
     private JwtParser parser;
 
     @PostConstruct
-    public void init() {
-        parser = Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
-                .build();
+    public void init(){
+
+        parser = Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes())).build();
     }
 
     public String generateToken(Authentication authentication) {
@@ -51,21 +51,15 @@ public class JwtProvider {
                 .setHeaderParam("typ", TOKEN_TYPE)
                 .setSubject(user.getId().toString())
                 .setIssuedAt(tokenExpirationDate)
-                .claim("fullname", user.getFullName())
+                .claim("nickname", user.getNickname())
                 .claim("role", user.getRole().name())
-                .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
+                .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))//signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
                 .compact();
 
 
     }
 
-    /*public Long getUserIdFromJwt(String token) {
 
-        return Long.valueOf(parser.parseClaimsJws(token).getBody().getSubject());
-
-
-    }
-     */
     public UUID getUserIdFromJwt(String token) {
         return UUID.fromString(parser.parseClaimsJws(token).getBody().getSubject());
     }
