@@ -1,8 +1,8 @@
 package com.salesianostriana.dam.miarma.security.jwt;
 
 
-import com.salesianostriana.dam.miarma.users.model.UserEntity;
-import com.salesianostriana.dam.miarma.users.services.UserEntityService;
+import com.salesianostriana.dam.miarma.security.users.model.UserEntity;
+import com.salesianostriana.dam.miarma.security.users.services.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

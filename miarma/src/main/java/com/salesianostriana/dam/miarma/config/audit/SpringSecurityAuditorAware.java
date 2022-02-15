@@ -2,7 +2,7 @@ package com.salesianostriana.dam.miarma.config.audit;
 
 
 
-import com.salesianostriana.dam.miarma.users.model.UserEntity;
+import com.salesianostriana.dam.miarma.security.users.model.UserEntity;
 import lombok.extern.java.Log;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;

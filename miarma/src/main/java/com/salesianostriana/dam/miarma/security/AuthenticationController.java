@@ -4,7 +4,7 @@ package com.salesianostriana.dam.miarma.security;
 import com.salesianostriana.dam.miarma.security.dto.JwtUserResponse;
 import com.salesianostriana.dam.miarma.security.dto.LoginDto;
 import com.salesianostriana.dam.miarma.security.jwt.JwtProvider;
-import com.salesianostriana.dam.miarma.users.model.UserEntity;
+import com.salesianostriana.dam.miarma.security.users.model.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +32,7 @@ public class AuthenticationController {
                 authenticationManager.authenticate(
                    new UsernamePasswordAuthenticationToken(
                            loginDto.getEmail(),
-                           loginDto.getPassword1()
+                           loginDto.getPassword()
                    )
                 );
 

@@ -54,26 +54,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //REGISTRO/LOGIN
 
                     .antMatchers(HttpMethod.POST, "/auth/register").anonymous()
-                    .antMatchers(HttpMethod.POST, "/auth/**").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "").hasRole("USER")
+                    .antMatchers(HttpMethod.POST, "/auth/login").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/auth/me").hasRole("USER")
 
                 //PUBLICACIONES
 
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+
 
                 //USUARIOS
 
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "").hasRole("USER")
+
                     .antMatchers("/h2-console/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                     .anyRequest().authenticated();
 

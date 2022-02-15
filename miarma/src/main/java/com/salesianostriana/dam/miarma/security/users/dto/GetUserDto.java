@@ -1,23 +1,25 @@
-package com.salesianostriana.dam.miarma.security.dto;
+package com.salesianostriana.dam.miarma.security.users.dto;
 
 import com.salesianostriana.dam.miarma.security.users.model.UserRole;
 import lombok.*;
 
 import java.time.LocalDate;
 
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class JwtUserResponse {
+public class GetUserDto {
 
     private String nickname;
     private LocalDate fechaNacimiento;
     private String email;
     private boolean isPublic;
+    private UserRole role;
     private String password;
     private String password2;
     private String avatar;
-    private String token;
-    private UserRole role;
+
 
 }

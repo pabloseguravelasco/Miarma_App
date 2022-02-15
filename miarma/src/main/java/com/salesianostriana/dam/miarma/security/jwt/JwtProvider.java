@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.miarma.security.jwt;
 
-import com.salesianostriana.dam.miarma.users.model.UserEntity;
+
+import com.salesianostriana.dam.miarma.security.users.model.UserEntity;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.java.Log;
