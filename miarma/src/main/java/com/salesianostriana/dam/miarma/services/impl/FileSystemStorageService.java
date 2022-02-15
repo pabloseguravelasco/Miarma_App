@@ -62,7 +62,7 @@ public class FileSystemStorageService implements StorageService {
 
         BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
 
-        BufferedImage bufferedImageEscaled = simpleResizeImage(bufferedImage , 500);
+        BufferedImage bufferedImageEscaled = simpleResizeImage(bufferedImage , 128);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -101,7 +101,7 @@ public class FileSystemStorageService implements StorageService {
 
         BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
 
-        BufferedImage bufferedImageEscaled = simpleResizeImage(bufferedImage , 1080);
+        BufferedImage bufferedImageEscaled = simpleResizeImage(bufferedImage , 1024);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

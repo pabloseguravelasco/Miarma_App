@@ -33,8 +33,6 @@ public class PostServiceImpl implements PostService {
                 .toUriString();
 
 
-        //Creo Post
-
         return repository.save(Post.builder()
 
                 .title(createPostDto.getTitle())

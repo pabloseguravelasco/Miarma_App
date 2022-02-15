@@ -16,7 +16,7 @@ public class GetUserDto {
     private LocalDate fechaNacimiento;
     private String email;
     private boolean isPublic;
-    private UserRole role;
+    private String role;
     private String password;
     private String password2;
     private String avatar;
