@@ -12,17 +12,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface PostService {
-    Post save(CreatePostDto createPostDto, MultipartFile file);
+
+    Post save(CreatePostDto createPostDto, MultipartFile file, UserEntity user);
 
     List<Post> findAll();
 
-    List<Post>findAllPostByUser();
+    List<Post> findByPublico(boolean publico);
 
-    void delete(Long id) throws IOException;
+    Optional<Post> findPostByID(Long id);
 
+    List<Post> findByUserNickname(String nickname);
 
-    ResponseEntity<GetPostDto> findOnePost(@PathVariable Long id, @AuthenticationPrincipal UserEntity user);
+    List<GetPostDto> listPostDto(String nickname);
+
 }

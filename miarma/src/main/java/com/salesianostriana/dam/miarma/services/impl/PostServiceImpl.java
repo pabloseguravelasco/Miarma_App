@@ -35,7 +35,7 @@ public class PostServiceImpl implements PostService {
     private final PostDtoConverter postDtoConverter;
 
     @Override
-    public Post save(CreatePostDto createPostDto, MultipartFile file) {
+    public Post save(CreatePostDto createPostDto, MultipartFile file, UserEntity user) {
 
         String filename = storageService.store(file);
 
@@ -50,6 +50,7 @@ public class PostServiceImpl implements PostService {
 
                 .title(createPostDto.getTitle())
                 .text(createPostDto.getText())
+                .user(user)
                 .imagen(uri)
                 .build());
 
@@ -57,6 +58,38 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<Post> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public  List<Post> findByPublico(boolean publico) {
+
+        return repository.findByPublico(publico);
+    }
+
+    @Override
+    public Optional<Post> findPostByID(Long id){
+
+        return  repository.findById(id);
+    }
+
+    @Override
+    public List<Post> findByUserNickname(String nickname){
+
+        return repository.findByUserNickname(nickname);
+    }
+
+    @Override
+    public List<GetPostDto> listPostDto(String nickname){
+
+        List<Post> listaPost = repository.findByUserNickname(nickname);
+
+       return listaPost.stream().map(postDtoConverter::convertListPostToListGetPostDto).collect(Collectors.toList());
+    }
+
+
+    /*@Override
     public void delete(Long id) throws IOException {
 
         Optional<Post> postOptional = repository.findById(id);
@@ -77,6 +110,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> findAll() {
+
         return repository.findAll();
     }
 
@@ -97,7 +131,7 @@ public class PostServiceImpl implements PostService {
             GetPostDto getPostDto = postDtoConverter.convertPostToGetPostDto(postOptional.get(),user);
             return null;
         }
-    }
+    }*/
 
 
 

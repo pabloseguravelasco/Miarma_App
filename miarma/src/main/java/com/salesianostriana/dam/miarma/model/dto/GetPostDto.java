@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.miarma.model.dto;
 
-import com.salesianostriana.dam.miarma.security.users.model.UserEntity;
 import lombok.*;
 
 @Getter
@@ -15,5 +14,5 @@ public class GetPostDto {
     private String text;
     private String imagen;
     private String userNickname;
-    private boolean isPublic;
+    private boolean publico;
 }

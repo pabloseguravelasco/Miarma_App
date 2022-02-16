@@ -13,7 +13,7 @@ public class JwtUserResponse {
     private String nickname;
     private LocalDate fechaNacimiento;
     private String email;
-    private boolean isPublic;
+    private boolean publico;
     private String password;
     private String password2;
     private String avatar;

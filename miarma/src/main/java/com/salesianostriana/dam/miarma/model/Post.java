@@ -1,10 +1,9 @@
 package com.salesianostriana.dam.miarma.model;
 
+import com.salesianostriana.dam.miarma.security.users.model.UserEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
@@ -21,5 +20,9 @@ public class Post {
     private String title;
     private String text;
     private String imagen;
-    private boolean isPublic;
+    private boolean publico;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }

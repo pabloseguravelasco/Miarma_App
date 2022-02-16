@@ -6,16 +6,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.salesianostriana.dam.miarma.model.Post;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Parameter;
@@ -66,7 +60,10 @@ public class UserEntity implements UserDetails {
 
     private String nickname;
 
-    private boolean isPublic = true;
+    private boolean publico;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> listaPost;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaNacimiento;

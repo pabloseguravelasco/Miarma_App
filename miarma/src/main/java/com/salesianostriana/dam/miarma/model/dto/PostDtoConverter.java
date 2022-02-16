@@ -22,7 +22,27 @@ public class PostDtoConverter {
                 .title(post.getTitle())
                 .text(post.getText())
                 .userNickname(user.getNickname())
-                .isPublic(post.isPublic())
+                .publico(post.isPublico())
+                .imagen(uri)
+                .build();
+
+
+    }
+
+    public GetPostDto convertListPostToListGetPostDto(Post post) {
+
+        String uri = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/download/")
+                .path(post.getImagen())
+                .toUriString();
+
+        return GetPostDto.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .text(post.getText())
+                .userNickname(post.getUser().getNickname())
+                .publico(post.isPublico())
                 .imagen(uri)
                 .build();
 

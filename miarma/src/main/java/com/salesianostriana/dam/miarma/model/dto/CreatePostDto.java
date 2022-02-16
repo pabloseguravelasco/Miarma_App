@@ -11,7 +11,7 @@ public class CreatePostDto {
 
     private String title;
     private String text;
-    private boolean isPublic;
+    private boolean publico;
 
 
 }
