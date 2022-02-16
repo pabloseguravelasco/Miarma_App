@@ -5,11 +5,14 @@ import com.salesianostriana.dam.miarma.model.Post;
 import com.salesianostriana.dam.miarma.model.dto.CreatePostDto;
 import com.salesianostriana.dam.miarma.model.dto.PostDtoConverter;
 import com.salesianostriana.dam.miarma.security.users.model.UserEntity;
+import com.salesianostriana.dam.miarma.security.users.model.UserRole;
 import com.salesianostriana.dam.miarma.services.PostService;
+import com.salesianostriana.dam.miarma.services.base.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class PostController {
 
+
     private final PostService service;
     private final PostDtoConverter postDtoConverter;
 
@@ -26,44 +30,53 @@ public class PostController {
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestPart("file") MultipartFile file,
                                     @RequestPart("post") CreatePostDto newPost,
-                                    @AuthenticationPrincipal UserEntity user)
-    {
+                                    @AuthenticationPrincipal UserEntity user) {
 
-        Post postCreated = service.save(newPost,file);
+        Post postCreated = service.save(newPost, file);
 
-        return  ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(postDtoConverter.convertPostToGetPostDto(postCreated, user));
 
     }
 
-   /* @PutMapping("/{id}")
+   /*@PutMapping("/{id}")
     public ResponseEntity<?> edit(@RequestPart("file") MultipartFile file,
                                   @RequestPart("post") CreatePostDto newPost,
-                                  @AuthenticationPrincipal UserEntity user) {
+                                  @AuthenticationPrincipal UserEntity user,
+                                  @PathVariable  Long id,
+                                  @RequestBody Post postUpdated) {
 
-        Post postUpdate = service.save(newPost, file);
+      if(user.getRole().equals(UserRole.USER) || id.equals((user.getId()))){
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(postDtoConverter.convertPostToGetPostDto(postUpdate, user));
+
+
+      }else
+
+        return ResponseEntity.badRequest().build();
 
     }*/
 
-    /*@DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@RequestPart("file") MultipartFile file,
-                                  @RequestPart("post") CreatePostDto newPost,
-                                  @AuthenticationPrincipal UserEntity user) {
+                                    @RequestPart("post") CreatePostDto newPost,
+                                    @AuthenticationPrincipal UserEntity user) {
 
         Post postUpdate = service.save(newPost, file);
 
         return ResponseEntity.noContent().build();
 
-    }*/
-
+    }
 
 
     @GetMapping("/")
-    public ResponseEntity<?> list() {
+    public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findOnePost(Long id, UserEntity user) {
+        return ResponseEntity.ok(service.findOnePost(id, user));
+    }
 }
+
+

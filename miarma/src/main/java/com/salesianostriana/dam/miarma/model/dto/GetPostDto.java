@@ -15,4 +15,5 @@ public class GetPostDto {
     private String text;
     private String imagen;
     private String userNickname;
+    private boolean isPublic;
 }

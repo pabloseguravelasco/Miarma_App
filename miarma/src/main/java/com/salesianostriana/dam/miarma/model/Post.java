@@ -21,4 +21,5 @@ public class Post {
     private String title;
     private String text;
     private String imagen;
+    private boolean isPublic;
 }

@@ -207,7 +207,8 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void deleteFile(String filename) {
-        // Pendiente
+
+
     }
 
     @Override

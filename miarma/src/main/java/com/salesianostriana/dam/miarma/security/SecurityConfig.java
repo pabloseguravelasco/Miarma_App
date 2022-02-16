@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //PUBLICACIONES
                 .antMatchers(HttpMethod.POST, "/post/").authenticated()
-                .antMatchers(HttpMethod.POST, "/post/{id}").authenticated()
+                //.antMatchers(HttpMethod.POST, "/post/{id}").authenticated()
 
 
 

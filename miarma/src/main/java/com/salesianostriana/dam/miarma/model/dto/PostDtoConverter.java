@@ -22,6 +22,7 @@ public class PostDtoConverter {
                 .title(post.getTitle())
                 .text(post.getText())
                 .userNickname(user.getNickname())
+                .isPublic(post.isPublic())
                 .imagen(uri)
                 .build();
 
