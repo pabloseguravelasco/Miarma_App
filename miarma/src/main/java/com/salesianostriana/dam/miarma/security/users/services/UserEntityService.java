@@ -52,6 +52,7 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                     .nickname(newUser.getNickname())
                     .fechaNacimiento(newUser.getFechaNacimiento())
                     .email(newUser.getEmail())
+                    .publico(newUser.isPublico())
                     .role(UserRole.USER)
                     .build();
             return save(userEntity);

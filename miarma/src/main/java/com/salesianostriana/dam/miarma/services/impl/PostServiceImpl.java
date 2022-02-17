@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService {
 
 
         return repository.save(Post.builder()
-
+                .publico(createPostDto.isPublico())
                 .title(createPostDto.getTitle())
                 .text(createPostDto.getText())
                 .user(user)
@@ -63,9 +63,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public  List<Post> findByPublico(boolean publico) {
+    public  List<GetPostDto> findByPublico(boolean publico) {
 
-        return repository.findByPublico(publico);
+        List<Post> listaPost = repository.findByPublico(publico);
+
+        return listaPost.stream().map(postDtoConverter::convertListPostToListGetPostDto).collect(Collectors.toList());
     }
 
     @Override

@@ -21,7 +21,7 @@ public interface PostService {
 
     List<Post> findAll();
 
-    List<Post> findByPublico(boolean publico);
+    List<GetPostDto> findByPublico(boolean publico);
 
     Optional<Post> findPostByID(Long id);
 
