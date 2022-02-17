@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.miarma.controller;
 
 
+import com.salesianostriana.dam.miarma.exception.PostNotFoundException;
 import com.salesianostriana.dam.miarma.model.Post;
 import com.salesianostriana.dam.miarma.model.PostRepository;
 import com.salesianostriana.dam.miarma.model.dto.CreatePostDto;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -44,7 +46,7 @@ public class PostController {
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestPart("file") MultipartFile file,
                                     @RequestPart("post") CreatePostDto newPost,
-                                    @AuthenticationPrincipal UserEntity user) {
+                                    @AuthenticationPrincipal UserEntity user) throws IOException {
 
         Post postCreated = service.save(newPost, file, user);
 
@@ -53,16 +55,6 @@ public class PostController {
 
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@RequestPart("file") MultipartFile file,
-                                    @RequestPart("post") CreatePostDto newPost,
-                                    @AuthenticationPrincipal UserEntity user) {
-
-        Post postUpdate = service.save(newPost, file, user);
-
-        return ResponseEntity.noContent().build();
-
-    }
 
     @GetMapping("/public")
     public ResponseEntity<?> findByIsPublic() {
@@ -99,56 +91,28 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public Optional<GetPostDto> updatePost (@PathVariable Long id,@RequestPart("file") MultipartFile file,
+    public ResponseEntity<Optional<GetPostDto>>updatePost (@PathVariable Long id,@RequestPart("file") MultipartFile file,
                                             @RequestPart("post") CreatePostDto createPostDto, @AuthenticationPrincipal  UserEntity user) throws Exception {
 
+        Optional<Post> postOptional = service.findPostByID(id);
 
-        if (file.isEmpty()){
-
-            Optional<Post> post = postRepository.findById(id);
-
-            return post.map(m -> {
-                m.setTitle(createPostDto.getTitle());
-                m.setText(createPostDto.getText());
-                m.setImagen(m.getImagen());
-                postRepository.save(m);
-                return postDtoConverter.convertPostToGetPostDto(m, user);
-            });
-
-        }else{
-
-            Optional<Post> post = postRepository.findById(id);
-
-            String name = StringUtils.cleanPath(String.valueOf(post.get().getImagen())).replace("http://localhost:8080/download/", "");
-
-            Path pa = storageService.load(name);
-
-            String filename = StringUtils.cleanPath(String.valueOf(pa)).replace("http://localhost:8080/download/", "");
-
-            Path path = Paths.get(filename);
-
-            storageService.deleteFile(post.get().getImagen());
-
-            String original = storageService.store(file);
-            String newFilename = storageService.storePost(file);
-
-            String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/download/")
-                    .path(newFilename)
-                    .toUriString();
-
-            return post.map(m -> {
-                m.setTitle(createPostDto.getTitle());
-                m.setText(createPostDto.getText());
-                m.setImagen(m.getImagen());
-                postRepository.save(m);
-                return postDtoConverter.convertPostToGetPostDto(m, user);
-
-            });
-        }
+        if (postOptional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        } else
+            return ResponseEntity.ok().body(service.updatePost(postOptional.get().getId(),file,createPostDto,user));
     }
 
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePost(@PathVariable Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new PostNotFoundException(id));
+
+        postRepository.delete(post);
+        storageService.delete(post.getImagen());
+
+        return ResponseEntity.noContent().build();
+    }
 
     }
 

@@ -53,84 +53,6 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
-    @Override
-    public String storeAvatar(MultipartFile file) throws Exception {
-        String filename = StringUtils.cleanPath(file.getOriginalFilename());
-
-        String extension = StringUtils.getFilenameExtension(filename);
-        String name = filename.replace("."+ extension,"");
-
-        BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-
-        BufferedImage bufferedImageEscaled = simpleResizeImage(bufferedImage , 128);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        ImageIO.write(bufferedImageEscaled, extension, baos);
-
-        MultipartFile newImage = new MockMultipartFile(name, baos.toByteArray());
-
-        try {
-
-            if (newImage.isEmpty())
-                throw new StorageException("El fichero subido está vacío");
-
-            while(Files.exists(rootLocation.resolve(filename))) {
-                String suffix = Long.toString(System.currentTimeMillis());
-                suffix = suffix.substring(suffix.length()-6);
-                filename = name + "_" + suffix + "." + extension;
-            }
-            try (InputStream inputStream = newImage.getInputStream()) {
-                Files.copy(inputStream, rootLocation.resolve(filename),
-                        StandardCopyOption.REPLACE_EXISTING);
-            }
-        } catch (IOException ex) {
-            throw new StorageException("Error en el almacenamiento del fichero: " + filename, ex);
-        }
-
-        return filename;
-
-    }
-
-    @Override
-    public String storePost(MultipartFile file) throws Exception {
-        String filename = StringUtils.cleanPath(file.getOriginalFilename());
-
-        String extension = StringUtils.getFilenameExtension(filename);
-        String name = filename.replace("."+ extension,"");
-
-        BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-
-        BufferedImage bufferedImageEscaled = simpleResizeImage(bufferedImage , 1024);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        ImageIO.write(bufferedImageEscaled, extension, baos);
-
-        MultipartFile newImage = new MockMultipartFile(name, baos.toByteArray());
-
-        try {
-
-            if (newImage.isEmpty())
-                throw new StorageException("El fichero subido está vacío");
-
-
-            while(Files.exists(rootLocation.resolve(filename))) {
-                String suffix = Long.toString(System.currentTimeMillis());
-                suffix = suffix.substring(suffix.length()-6);
-                filename = name + "_" + suffix + "." + extension;
-            }
-            try (InputStream inputStream = newImage.getInputStream()) {
-                Files.copy(inputStream, rootLocation.resolve(filename),
-                        StandardCopyOption.REPLACE_EXISTING);
-            }
-        } catch (IOException ex) {
-            throw new StorageException("Error en el almacenamiento del fichero: " + filename, ex);
-        }
-
-        return filename;
-
-    }
 
     @Override
     public String store(MultipartFile file) {
@@ -170,6 +92,12 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
+    public BufferedImage scaledImg(BufferedImage bufferedImage, int dimension) {
+
+        return Scalr.resize(bufferedImage, dimension);
+    }
+
+    @Override
     public Stream<Path> loadAll() {
         try {
             return Files.walk(this.rootLocation, 1)
@@ -206,8 +134,14 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void deleteFile(String filename) {
-
+    public void delete(String filename) {
+        String justFilename = StringUtils.getFilename(filename);
+        try {
+            Path file = load(justFilename);
+            Files.deleteIfExists(file);
+        } catch (IOException e) {
+            throw new StorageException("Error al eliminar el post", e);
+        }
 
     }
 
