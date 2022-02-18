@@ -61,15 +61,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //PUBLICACIONES
                 .antMatchers(HttpMethod.POST, "/post/").authenticated()
                 .antMatchers(HttpMethod.GET,"/post/public").authenticated()
-                .antMatchers(HttpMethod.GET,"/post/{id}").authenticated()
+                .antMatchers(HttpMethod.GET,"/post/").authenticated()
                 .antMatchers(HttpMethod.GET,"/post/public").authenticated()
                 .antMatchers(HttpMethod.GET,"/post/me").authenticated()
-                //.antMatchers(HttpMethod.POST, "/post/{id}").authenticated()
-
-
+                .antMatchers(HttpMethod.DELETE, "/post/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/post/{id}").authenticated()
 
                 //USUARIOS
-
+                .antMatchers(HttpMethod.GET, "/profile/**").authenticated()
+                .antMatchers(HttpMethod.PUT, "/profile/**").authenticated()
 
                     .antMatchers("/h2-console/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                     .anyRequest().authenticated();

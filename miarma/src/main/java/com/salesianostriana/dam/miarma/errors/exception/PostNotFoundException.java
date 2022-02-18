@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.miarma.exception;
+package com.salesianostriana.dam.miarma.errors.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

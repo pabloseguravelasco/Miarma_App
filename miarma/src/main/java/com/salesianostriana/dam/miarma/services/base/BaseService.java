@@ -43,6 +43,8 @@ public abstract class BaseService<T, ID, R extends JpaRepository<T,ID>> {
         repositorio.deleteById(id);
     }
 
-    public abstract Optional<GetUserDto> updateUser (@PathVariable UUID id, @RequestPart("file") MultipartFile file,
-                                                     @RequestPart("user") CreateUserDto createuserDto, @AuthenticationPrincipal UserEntity user) throws Exception;
+    public abstract GetUserDto updateUser(MultipartFile file, CreateUserDto createuserDto, UserEntity user) throws Exception;
+
+
+   // public abstract GetUserDto findUserByID( UUID id, MultipartFile file, CreateUserDto createuserDto, UserEntity user) throws Exception;
 }

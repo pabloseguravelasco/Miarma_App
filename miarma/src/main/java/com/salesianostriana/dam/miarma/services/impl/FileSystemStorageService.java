@@ -1,24 +1,21 @@
 package com.salesianostriana.dam.miarma.services.impl;
 
 import com.salesianostriana.dam.miarma.config.StorageProperties;
-import com.salesianostriana.dam.miarma.exception.FileNotFoundException;
-import com.salesianostriana.dam.miarma.exception.StorageException;
+import com.salesianostriana.dam.miarma.errors.exception.FileNotFoundException;
+import com.salesianostriana.dam.miarma.errors.exception.StorageException;
 import com.salesianostriana.dam.miarma.services.StorageService;
 import com.salesianostriana.dam.miarma.utils.MediaTypeUrlResource;
 
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;

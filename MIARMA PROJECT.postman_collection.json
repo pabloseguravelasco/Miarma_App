@@ -11,16 +11,6 @@
 				{
 					"name": "POST Crear Usuario",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -34,14 +24,9 @@
 								{
 									"key": "user",
 									"type": "file",
-									"src": "/C:/Users/segura.vepab21/Desktop/Miarma_App/User.json"
+									"src": "/C:/Users/segura.vepab21/Desktop/Miarma_App/miarma/json/User.json"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "localhost:8080/auth/register",
@@ -173,7 +158,7 @@
 								{
 									"key": "post",
 									"type": "file",
-									"src": "/C:/Users/segura.vepab21/Desktop/Miarma_App/Post.json"
+									"src": "/C:/Users/segura.vepab21/Desktop/Miarma_App/miarma/json/Post.json"
 								}
 							]
 						},
@@ -211,27 +196,25 @@
 							"formdata": [
 								{
 									"key": "file",
-									"contentType": "image/jpg",
 									"type": "file",
-									"src": "/C:/Users/segura.vepab21/Desktop/Miarma_App/miarma/images/updatePublicacion.jpg"
+									"src": "/C:/Users/pablo/OneDrive/Desktop/Miarma_App/miarma/images/updatePublicacion.jpg"
 								},
 								{
 									"key": "post",
-									"contentType": "application/json",
 									"type": "file",
-									"src": "/C:/Users/segura.vepab21/Desktop/Miarma_App/PostUpdate.json"
+									"src": "/C:/Users/pablo/OneDrive/Desktop/Miarma_App/PostUpdate.json"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:8080/post/5",
+							"raw": "localhost:8080/post/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"post",
-								"5"
+								"1"
 							]
 						}
 					},
@@ -252,15 +235,25 @@
 						},
 						"method": "DELETE",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user",
+									"type": "file",
+									"src": "/C:/Users/pablo/OneDrive/Desktop/Miarma_App/User.json"
+								}
+							]
+						},
 						"url": {
-							"raw": "localhost:8080/post/1",
+							"raw": "localhost:8080/post/2",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"post",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -396,16 +389,73 @@
 				{
 					"name": "GET Mostrar Perfil de Usuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/profile/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"profile",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "PUT Editar Mi Perfil",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/pablo/OneDrive/Desktop/Miarma_App/miarma/images/avatarUpdated.jpg"
+								},
+								{
+									"key": "user",
+									"type": "file",
+									"src": "/C:/Users/pablo/OneDrive/Desktop/Miarma_App/User.json"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/profile/me",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"profile",
+								"me"
+							]
+						}
 					},
 					"response": []
 				},
@@ -413,7 +463,24 @@
 					"name": "POST Seguir Usuario",
 					"request": {
 						"method": "POST",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/follow/?nickname=PabloSegurita",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"follow",
+								""
+							],
+							"query": [
+								{
+									"key": "nickname",
+									"value": "PabloSegurita"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -421,7 +488,19 @@
 					"name": "POST Aceptar Solicitud Seguimiento",
 					"request": {
 						"method": "POST",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/follow/accept/c0a83801-7f0c-1264-817f-0cc27f140000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"follow",
+								"accept",
+								"c0a83801-7f0c-1264-817f-0cc27f140000"
+							]
+						}
 					},
 					"response": []
 				},
@@ -429,7 +508,19 @@
 					"name": "POST Rechazar Solicitud Seguimiento",
 					"request": {
 						"method": "POST",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/follow/decline/c0a83801-7f0c-1264-817f-0cc27f140000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"follow",
+								"decline",
+								"c0a83801-7f0c-1264-817f-0cc27f140000"
+							]
+						}
 					},
 					"response": []
 				},
@@ -437,7 +528,18 @@
 					"name": "GET Listar Solicitudes Seguimiento",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/follow/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"follow",
+								"list"
+							]
+						}
 					},
 					"response": []
 				}

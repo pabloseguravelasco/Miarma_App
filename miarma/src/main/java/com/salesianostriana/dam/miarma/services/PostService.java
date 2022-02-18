@@ -30,6 +30,6 @@ public interface PostService {
 
     List<GetPostDto> listPostDto(String nickname);
 
-    Optional<GetPostDto> updatePost( Long id, @RequestPart("file") MultipartFile file,
-                                    @RequestPart("post") CreatePostDto createPostDto, @AuthenticationPrincipal UserEntity user) throws Exception;
+    Optional<GetPostDto> updatePost( Long id, MultipartFile file,
+                                    CreatePostDto createPostDto,  UserEntity user) throws Exception;
 }

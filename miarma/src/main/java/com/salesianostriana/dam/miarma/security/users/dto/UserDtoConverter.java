@@ -16,6 +16,7 @@ public class UserDtoConverter {
                 .toUriString();
 
         return GetUserDto.builder()
+                .id(user.getId())
                 .nickname(user.getNickname())
                 .fechaNacimiento(user.getFechaNacimiento())
                 .email(user.getEmail())

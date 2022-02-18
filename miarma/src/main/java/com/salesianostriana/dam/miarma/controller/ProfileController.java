@@ -6,9 +6,11 @@ import com.salesianostriana.dam.miarma.model.dto.GetPostDto;
 import com.salesianostriana.dam.miarma.security.dto.JwtUserResponse;
 import com.salesianostriana.dam.miarma.security.users.dto.CreateUserDto;
 import com.salesianostriana.dam.miarma.security.users.dto.GetUserDto;
+import com.salesianostriana.dam.miarma.security.users.dto.UserDtoConverter;
 import com.salesianostriana.dam.miarma.security.users.model.UserEntity;
 import com.salesianostriana.dam.miarma.security.users.repository.UserEntityRepository;
 import com.salesianostriana.dam.miarma.security.users.services.UserEntityService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
@@ -31,17 +33,30 @@ public class ProfileController {
 
     private final UserEntityRepository userEntityRepository;
     private final UserEntityService userEntityService;
-
+    private final UserDtoConverter userDtoConverter;
 
     @GetMapping("/{id}")
+    public ResponseEntity<GetUserDto> findProfileByID ( @PathVariable UUID id, @AuthenticationPrincipal UserEntity user) throws Exception {
+
+        Optional<UserEntity> userEntity = userEntityRepository.findById(id);
+
+            if (userEntity.get().getId() == null){
+                return ResponseEntity.notFound().build();
+            } else
+                return ResponseEntity.ok().body(userDtoConverter.convertUserEntityToGetUserDto(userEntity.get()));
+        }
+
+
 
 
    @PutMapping("/me")
-    public ResponseEntity<Optional<GetUserDto>> updateUser (@PathVariable UUID id, @RequestPart("file") MultipartFile file,
+    public ResponseEntity<GetUserDto> updateUser ( @RequestPart("file") MultipartFile file,
                                                             @RequestPart("user") CreateUserDto createuserDto, @AuthenticationPrincipal UserEntity user) throws Exception{
 
-            return ResponseEntity.ok().body(userEntityService.updateUser(id, file, createuserDto, user));
+            return ResponseEntity.ok().body(userEntityService.updateUser( file, createuserDto, user));
     }
+
+
 }
 
 

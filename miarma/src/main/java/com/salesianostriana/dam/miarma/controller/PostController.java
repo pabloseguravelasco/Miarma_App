@@ -1,32 +1,23 @@
 package com.salesianostriana.dam.miarma.controller;
 
 
-import com.salesianostriana.dam.miarma.exception.PostNotFoundException;
+import com.salesianostriana.dam.miarma.errors.exception.PostNotFoundException;
 import com.salesianostriana.dam.miarma.model.Post;
 import com.salesianostriana.dam.miarma.model.PostRepository;
 import com.salesianostriana.dam.miarma.model.dto.CreatePostDto;
 import com.salesianostriana.dam.miarma.model.dto.GetPostDto;
 import com.salesianostriana.dam.miarma.model.dto.PostDtoConverter;
-import com.salesianostriana.dam.miarma.security.users.dto.GetUserDto;
 import com.salesianostriana.dam.miarma.security.users.model.UserEntity;
-import com.salesianostriana.dam.miarma.security.users.model.UserRole;
 import com.salesianostriana.dam.miarma.services.PostService;
 import com.salesianostriana.dam.miarma.services.StorageService;
-import com.salesianostriana.dam.miarma.services.base.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
